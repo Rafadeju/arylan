@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Connections</title>
+<style>
+body {
+font-family: sans-serif;
+}
+
+.container {
+width: 400px;
+margin: 0 auto;
+}
+
+.word {
+display: inline-block;
+margin: 5px;
+padding: 5px;
+border: 1px solid #ccc;
+}
+
+.word.correct {
+background-color: green;
+}
+
+.word.incorrect {
+background-color: red;
+}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>Connections</h1>
+<p>Find the common thread between the following words:</p>
+<div id="words"></div>
+<button onclick="checkAnswer()">Check Answer</button>
+</div>
+
+<script>
+const words = [
+  "apple",
+  "orange",
+  "banana",
+  "grape"
+];
+
+const theme = "fruit";
+
+const correctWords = [];
+
+function generateWords() {
+  const shuffledWords = words.slice();
+
+  for (let i = 0; i < shuffledWords.length; i++) {
+    const word = shuffledWords[i];
+
+    const wordElement = document.createElement("span");
+    wordElement.textContent = word;
+    wordElement.classList.add("word");
+
+    document.getElementById("words").appendChild(wordElement);
+
+    correctWords.push(word);
+  }
+}
+
+function checkAnswer() {
+  const selectedWords = [];
+
+  const wordElements = document.querySelectorAll(".word");
+  for (const wordElement of wordElements) {
+    if (wordElement.classList.contains("selected")) {
+      selectedWords.push(wordElement.textContent);
+    }
+  }
+
+  if (selectedWords.length !== correctWords.length) {
+    alert("You must select exactly four words.");
+    return;
+  }
+
+  let isCorrect = true;
+  for (const selectedWord of selectedWords) {
+    if (!correctWords.includes(selectedWord)) {
+      isCorrect = false;
+      break;
+    }
+  }
+
+  if (isCorrect) {
+    alert("Congratulations! You found the correct connection.");
+  } else {
+    alert("Sorry, your answer is incorrect.");
+  }
+}
+
+generateWords();
+</script>
+</body>
+</html>
